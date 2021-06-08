@@ -4,7 +4,9 @@ empCheck=$((RANDOM%2))
 isPresent=1
 if(($empCheck==$isPresent))
 then
-	echo Employee present
+	empRatePerHr=20;
+	empHrs=8;
+	salary=$(($empHrs*$empRatePerHr))
 else
-	echo Employee is absent
+	salary=0
 fi
