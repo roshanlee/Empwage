@@ -8,8 +8,10 @@ NUM_WORKING_DAYS=20
 
 totalEmpHr=0
 totalWorkingDays=0
+declare -A empDailyWage
+
 function getWorkingHours(){
-	 case $1 in
+    case $1 in
       $IS_FULL_TIME)
          empHrs=8
       ;;
@@ -20,7 +22,7 @@ function getWorkingHours(){
          empHrs=0
       ;;
    esac
-	echo $empHrs
+   echo $empHrs
 }
 function calculateWage() {
         workHours=$1
@@ -31,12 +33,15 @@ function calculateWage() {
 
 while(($totalEmpHr<$MAX_HRS_IN_MONTH && $totalWorkingDays<$NUM_WORKING_DAYS))
 do
-	((totalWorkingDays++))
-	empCheck=$((RANDOM%2))
-	workHours="$(getWorkingHours $empCheck)"
-	totalEmpHr=$(($totalEmpHr*$workHours))
-	empDailyWage[$totalWorkingDays]="$(calculateWage $workHours)"
+   ((totalWorkingDays++))
+   empCheck=$((RANDOM%2))
+   workHours="$(getWorkingHours $empCheck)"
+   totalEmpHr=$(($totalEmpHr*$workHours))
+   empDailyWage[$totalWorkingDays]="$(calculateWage $workHours)"
 done
 
 wage=$(($totalEmpHr*$EMP_RATE_PER_HR))
-echo ${empDailyWage[@]}
+echo "Employee daily wage " ${empDailyWage[@]}
+echo "DAy :: " ${!empDailyWage[@]}
+
+
